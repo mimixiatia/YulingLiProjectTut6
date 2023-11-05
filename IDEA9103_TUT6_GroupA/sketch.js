@@ -25,7 +25,7 @@ class ringCreater{
     for (let angleOffset = 0; angleOffset <= 360; angleOffset += 15) {
       for (let j = 1; j <= this.ringNum; j += 1) {
         this.ringR = 80 + j * 30 + noise(this.centerX + noiseOffset) * 40;  // add noise 
-        let noisyAngle = angleOffset + noise(this.centerY + noiseOffset) * 80;  // add noise
+        let noisyAngle = angleOffset + noise(this.centerY + noiseOffset) * 40;  // add noise
         //changing the color range
         fill(random(180,255), random(60,180), random(0,100));
         
@@ -297,8 +297,8 @@ function draw() {
 
   drawChains();
 
-  noiseOffset += 0.003;  // Increment the noise offset for the next frame
-  innerNoiseOffset += 0.001;
+  noiseOffset += 0.05;  // Increment the noise offset for the next frame
+  innerNoiseOffset += 0.05;
 }
 
 function windowResized(){
