@@ -25,7 +25,7 @@ class ringCreater{
         this.ringR = 80 + j * 30 + noise(this.centerX + noiseOffset) * 10;  // Add noise to radius
         let noisyAngle = angleOffset + noise(this.centerY + noiseOffset) * 5;  // Add noise to angle
         
-        fill(random(255), random(255), random(255));
+        fill(random(180,255), random(60,180), random(0,100));
         
         circle((this.centerX + this.ringR * cos(noisyAngle)) * resizeScale, 
                (this.centerY + this.ringR * sin(noisyAngle)) * resizeScale, 
@@ -41,7 +41,7 @@ class ringCreater{
     for (let k = 0; k <= this.ringR; k += 1) {
       this.ringR -= 30;
       
-      fill(random(255), random(255), random(255));
+      fill(random(180,255), random(60,180), random(0,100));
       
       let noisyRadius = this.ringR + noise(this.centerX + k + noiseOffset) * 10;  // Add noise to radius
       circle(this.centerX * resizeScale, this.centerY * resizeScale, noisyRadius * resizeScale);
@@ -52,9 +52,9 @@ class ringCreater{
 //The midpoint of two adjacent large circles can be the center of a chain
 function drawChain(midPointX1, midPointY1, midPointX2, midPointY2, chainType){
   push();
-  stroke(51,51,204);
+  stroke(98,136,146);
   strokeWeight(3);
-  fill(255, 130, 0);
+  fill(224, 221, 166);
   translate(((midPointX1+midPointX2)/2)*resizeScale, ((midPointY1+midPointY2)/2)*resizeScale);
   if(chainType == 1){
     rotate(70);
@@ -130,7 +130,7 @@ function drawCircle1Row1(){
     let startY = centerY + innerRadius*sin(angle);
     let endX = centerX + outerRadius*cos(angle);
     let endY = centerY + outerRadius*sin(angle);
-    stroke(random(255), random(255), random(255));
+    stroke(random(30,70), random(100,180), random(160,220));
     line(startX, startY, endX, endY);
   }
 }
@@ -196,7 +196,7 @@ function drawCircle3Row2(){
     let startY = centerY + innerRadius*sin(angle);
     let endX = centerX + outerRadius*cos(angle);
     let endY = centerY + outerRadius*sin(angle);
-    stroke(random(255), random(255), random(255));
+    stroke(random(160,220), random(100,140), random(30,70));
     line(startX, startY, endX, endY);
   }
 }
@@ -228,7 +228,7 @@ function drawCircle1Row3(){
     let startY = centerY + innerRadius*sin(angle);
     let endX = centerX + outerRadius*cos(angle);
     let endY = centerY + outerRadius*sin(angle);
-    stroke(random(255), random(255), random(255));
+    stroke(random(180,255), random(180,255), random(180,255));
     line(startX, startY, endX, endY);
   }
 }
@@ -275,7 +275,7 @@ function draw() {
   resizeScaleY = windowHeight / 900;
   resizeScale = min(resizeScaleX, resizeScaleY);
 
-  background(250, 220, 180);
+  background(200, 120, 50);
 
   drawCircle1Row1();
   drawCircle2Row1();
@@ -293,7 +293,7 @@ function draw() {
 
   drawChains();
 
-  noiseOffset += 0.1;  // Increment the noise offset for the next frame
+  noiseOffset += 0.01;  // Increment the noise offset for the next frame
 }
 
 function windowResized(){
