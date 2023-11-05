@@ -44,7 +44,7 @@ class ringCreater{
       this.ringR -= 30;
       //changing the color range
       fill(random(180,255), random(60,180), random(0,100));
-      let noisyRadius = this.ringR + noise(this.centerX + k + noiseOffset) * 90;  // add noise 
+      let noisyRadius = this.ringR + noise(this.centerX + k + noiseOffset) * 80;  // add noise 
       circle(this.centerX * resizeScale, this.centerY * resizeScale, noisyRadius * resizeScale);
     }
   }
