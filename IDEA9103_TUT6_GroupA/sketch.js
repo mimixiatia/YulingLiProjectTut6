@@ -2,6 +2,8 @@ let resizeScaleX;
 let resizeScaleY;
 let resizeScale;
 let noiseOffset = 0;
+let innerNoiseOffset = 0;
+
 
 //there are two kinds of rings
 //they are formed by the small shapes in the large circles
@@ -22,8 +24,8 @@ class ringCreater{
   drawOuterRing() {
     for (let angleOffset = 0; angleOffset <= 360; angleOffset += 15) {
       for (let j = 1; j <= this.ringNum; j += 1) {
-        this.ringR = 80 + j * 30 + noise(this.centerX + noiseOffset) * 10;  // Add noise to radius
-        let noisyAngle = angleOffset + noise(this.centerY + noiseOffset) * 5;  // Add noise to angle
+        this.ringR = 80 + j * 30 + noise(this.centerX + noiseOffset) * 45;  // add noise 
+        let noisyAngle = angleOffset + noise(this.centerY + noiseOffset) * 180;  // add noise
         //changing the color range
         fill(random(180,255), random(60,180), random(0,100));
         
@@ -38,11 +40,11 @@ class ringCreater{
   drawInnerRing() {
     this.ringNum = 5;
     this.ringR = 200;
-    for (let k = 0; k <= this.ringR; k += 1) {
+    for (let k = 0; k <= this.ringNum; k ++) {
       this.ringR -= 30;
       //changing the color range
       fill(random(180,255), random(60,180), random(0,100));
-      let noisyRadius = this.ringR + noise(this.centerX + k + noiseOffset) * 10;  // Add noise to radius
+      let noisyRadius = this.ringR + noise(this.centerX + k + noiseOffset) * 90;  // add noise 
       circle(this.centerX * resizeScale, this.centerY * resizeScale, noisyRadius * resizeScale);
     }
   }
@@ -128,6 +130,7 @@ function drawCircle1Row1(){
     let startY = centerY + innerRadius*sin(angle);
     let endX = centerX + outerRadius*cos(angle);
     let endY = centerY + outerRadius*sin(angle);
+    //changing the color range
     stroke(random(30,70), random(100,180), random(160,220));
     line(startX, startY, endX, endY);
   }
@@ -194,6 +197,7 @@ function drawCircle3Row2(){
     let startY = centerY + innerRadius*sin(angle);
     let endX = centerX + outerRadius*cos(angle);
     let endY = centerY + outerRadius*sin(angle);
+    //changing the color range
     stroke(random(160,220), random(100,140), random(30,70));
     line(startX, startY, endX, endY);
   }
@@ -226,6 +230,7 @@ function drawCircle1Row3(){
     let startY = centerY + innerRadius*sin(angle);
     let endX = centerX + outerRadius*cos(angle);
     let endY = centerY + outerRadius*sin(angle);
+    //changing the color range
     stroke(random(180,255), random(180,255), random(180,255));
     line(startX, startY, endX, endY);
   }
@@ -291,7 +296,8 @@ function draw() {
 
   drawChains();
 
-  noiseOffset += 0.01;  // Increment the noise offset for the next frame
+  noiseOffset += 0.003;  // Increment the noise offset for the next frame
+  innerNoiseOffset += 0.001;
 }
 
 function windowResized(){
