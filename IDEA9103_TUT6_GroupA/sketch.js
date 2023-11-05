@@ -24,7 +24,7 @@ class ringCreater{
       for (let j = 1; j <= this.ringNum; j += 1) {
         this.ringR = 80 + j * 30 + noise(this.centerX + noiseOffset) * 10;  // Add noise to radius
         let noisyAngle = angleOffset + noise(this.centerY + noiseOffset) * 5;  // Add noise to angle
-        
+        //changing the color range
         fill(random(180,255), random(60,180), random(0,100));
         
         circle((this.centerX + this.ringR * cos(noisyAngle)) * resizeScale, 
@@ -40,9 +40,8 @@ class ringCreater{
     this.ringR = 200;
     for (let k = 0; k <= this.ringR; k += 1) {
       this.ringR -= 30;
-      
+      //changing the color range
       fill(random(180,255), random(60,180), random(0,100));
-      
       let noisyRadius = this.ringR + noise(this.centerX + k + noiseOffset) * 10;  // Add noise to radius
       circle(this.centerX * resizeScale, this.centerY * resizeScale, noisyRadius * resizeScale);
     }
@@ -120,7 +119,6 @@ function drawCircle1Row1(){
   circle(230*resizeScale, 230*resizeScale, 400*resizeScale);
   let ringCreater1 = new ringCreater(230, 230);
   ringCreater1.drawInnerRing();
-
   let innerRadius = 100*resizeScale;
   let outerRadius = 200*resizeScale;
   let centerX = 230*resizeScale;
