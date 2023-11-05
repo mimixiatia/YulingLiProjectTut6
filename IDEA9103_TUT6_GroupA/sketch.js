@@ -1,6 +1,7 @@
 let resizeScaleX;
 let resizeScaleY;
 let resizeScale;
+let noiseOffset = 0;
 
 //there are two kinds of rings
 //they are formed by the small shapes in the large circles
@@ -18,30 +19,35 @@ class ringCreater{
   }
 
   //outer rings are made up of small circles
-  drawOuterRing(){
-    for(let angleOffset = 0; angleOffset<=360; angleOffset+=15){
-      for(let j = 1; j<=this.ringNum; j+=1){
-        this.ringR = 80+j*30;
-        circle((this.centerX+this.ringR*cos(angleOffset))*resizeScale, (this.centerY+this.ringR*sin(angleOffset))*resizeScale,this.smallCircleR*resizeScale);
+  drawOuterRing() {
+    for (let angleOffset = 0; angleOffset <= 360; angleOffset += 15) {
+      for (let j = 1; j <= this.ringNum; j += 1) {
+        this.ringR = 80 + j * 30 + noise(this.centerX + noiseOffset) * 10;  // Add noise to radius
+        let noisyAngle = angleOffset + noise(this.centerY + noiseOffset) * 5;  // Add noise to angle
+        
+        fill(random(255), random(255), random(255));
+        
+        circle((this.centerX + this.ringR * cos(noisyAngle)) * resizeScale, 
+               (this.centerY + this.ringR * sin(noisyAngle)) * resizeScale, 
+               this.smallCircleR * resizeScale);
       }
     }
   }
-
   //an inner ring is formed by nested circles
   //it contains five circles
-  drawInnerRing(){
-    this.innerRingColorR = [240, 210, 230, 190, 230];
-    this.innerRingColorG = [160, 130, 180, 140, 180];
-    this.innerRingColorB = [100, 60, 150, 140, 150];
-    this.ringNum =5;
+  drawInnerRing() {
+    this.ringNum = 5;
     this.ringR = 200;
-    for(let k = 0; k<=this.ringR;k+=1){
+    for (let k = 0; k <= this.ringR; k += 1) {
       this.ringR -= 30;
-      fill(this.innerRingColorR[k], this.innerRingColorG[k], this.innerRingColorB[k]);
-      circle(this.centerX*resizeScale, this.centerY*resizeScale, this.ringR*resizeScale);
+      
+      fill(random(255), random(255), random(255));
+      
+      let noisyRadius = this.ringR + noise(this.centerX + k + noiseOffset) * 10;  // Add noise to radius
+      circle(this.centerX * resizeScale, this.centerY * resizeScale, noisyRadius * resizeScale);
     }
   }
-}
+  }
 
 //The midpoint of two adjacent large circles can be the center of a chain
 function drawChain(midPointX1, midPointY1, midPointX2, midPointY2, chainType){
@@ -72,7 +78,12 @@ function drawChain(midPointX1, midPointY1, midPointX2, midPointY2, chainType){
   pop();
 }
 
-function drawChains(){
+function drawChains(centerX, centerY){
+  noStroke();
+  fill(255, 230, 180);
+  circle(centerX*resizeScale, centerY*resizeScale, 400*resizeScale);
+  let ringCreater1 = new ringCreater(centerX, centerY);
+  ringCreater1.drawInnerRing();
   //draw a chain that is placed between
   //the first circle and the second circle in the first row
   drawChain(230, 230, 640, 80, 1);
@@ -110,7 +121,6 @@ function drawCircle1Row1(){
   let ringCreater1 = new ringCreater(230, 230);
   ringCreater1.drawInnerRing();
 
-  stroke(255, 0, 0);
   let innerRadius = 100*resizeScale;
   let outerRadius = 200*resizeScale;
   let centerX = 230*resizeScale;
@@ -120,6 +130,7 @@ function drawCircle1Row1(){
     let startY = centerY + innerRadius*sin(angle);
     let endX = centerX + outerRadius*cos(angle);
     let endY = centerY + outerRadius*sin(angle);
+    stroke(random(255), random(255), random(255));
     line(startX, startY, endX, endY);
   }
 }
@@ -176,7 +187,6 @@ function drawCircle3Row2(){
   let ringCreater1 = new ringCreater(975, 360);
   ringCreater1.drawInnerRing();
 
-  stroke(51, 0, 102);
   let innerRadius = 100*resizeScale;
   let outerRadius = 200*resizeScale;
   let centerX = 975*resizeScale;
@@ -186,6 +196,7 @@ function drawCircle3Row2(){
     let startY = centerY + innerRadius*sin(angle);
     let endX = centerX + outerRadius*cos(angle);
     let endY = centerY + outerRadius*sin(angle);
+    stroke(random(255), random(255), random(255));
     line(startX, startY, endX, endY);
   }
 }
@@ -207,7 +218,6 @@ function drawCircle1Row3(){
   let ringCreater1 = new ringCreater(490, 940);
   ringCreater1.drawInnerRing();
 
-  stroke(255, 0, 0);
   strokeWeight(2);
   let innerRadius = 100*resizeScale;
   let outerRadius = 200*resizeScale;
@@ -218,6 +228,7 @@ function drawCircle1Row3(){
     let startY = centerY + innerRadius*sin(angle);
     let endX = centerX + outerRadius*cos(angle);
     let endY = centerY + outerRadius*sin(angle);
+    stroke(random(255), random(255), random(255));
     line(startX, startY, endX, endY);
   }
 }
@@ -260,8 +271,8 @@ function setup() {
 }
 
 function draw() {
-  resizeScaleX = windowWidth/1665;
-  resizeScaleY = windowHeight/900;
+  resizeScaleX = windowWidth / 1665;
+  resizeScaleY = windowHeight / 900;
   resizeScale = min(resizeScaleX, resizeScaleY);
 
   background(250, 220, 180);
@@ -281,6 +292,8 @@ function draw() {
   drawCircle4Row3();
 
   drawChains();
+
+  noiseOffset += 0.1;  // Increment the noise offset for the next frame
 }
 
 function windowResized(){
