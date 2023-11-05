@@ -24,8 +24,8 @@ class ringCreater{
   drawOuterRing() {
     for (let angleOffset = 0; angleOffset <= 360; angleOffset += 15) {
       for (let j = 1; j <= this.ringNum; j += 1) {
-        this.ringR = 80 + j * 30 + noise(this.centerX + noiseOffset) * 45;  // add noise 
-        let noisyAngle = angleOffset + noise(this.centerY + noiseOffset) * 180;  // add noise
+        this.ringR = 80 + j * 30 + noise(this.centerX + noiseOffset) * 40;  // add noise 
+        let noisyAngle = angleOffset + noise(this.centerY + noiseOffset) * 80;  // add noise
         //changing the color range
         fill(random(180,255), random(60,180), random(0,100));
         
@@ -271,6 +271,7 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   angleMode(DEGREES);
   //createCanvas(1665, 900);
+  frameRate(5);
 }
 
 function draw() {
